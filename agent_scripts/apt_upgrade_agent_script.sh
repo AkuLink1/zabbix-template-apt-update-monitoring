@@ -9,6 +9,9 @@ AGENTD_CONF_FILE=/etc/zabbix/zabbix_agentd.conf
 
 # Route for tmp file to store yum output
 TEMP_ZBX_FILE=/tmp/zabbix_apt_check_output.tmp
+# Create folder if not exists
+mkdir -p /tmp/zabbix
+
 echo -n "" > $TEMP_ZBX_FILE
 
 # Check if Server IP/name is set in configuration file

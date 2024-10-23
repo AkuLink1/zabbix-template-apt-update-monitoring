@@ -5,25 +5,25 @@
 #
 
 # Server configuration file route
-AGENTD_CONF_FILE=/etc/zabbix/zabbix_agentd.conf
+ZBX_AGENT_CONF_FILE=$(ls /etc/zabbix/ | grep -E '^zabbix_agent[2d]\.conf$')
 
 # Route for tmp file to store yum output
 TEMP_ZBX_FILE=/tmp/zabbix_apt_check_output.tmp
 echo -n "" > $TEMP_ZBX_FILE
 
 # Check if Server IP/name is set in configuration file
-ZBX_SERVER=$(egrep ^Server $AGENTD_CONF_FILE | cut -d = -f 2)
+ZBX_SERVER=$(egrep ^Server $ZBX_AGENT_CONF_FILE | tail -n 1 | cut -d = -f 2)
 if [ -z "$ZBX_SERVER" ]; then
-   echo "Server is not set in zabbix_agentd.conf file"
-   exit -1
+  echo "Server is not set in $ZBX_AGENT_CONF_FILE file"
+  exit -1
 fi
 
 # Get hostname
-ZBX_HOSTNAMEITEM_PRESENT=$(egrep ^HostnameItem /etc/zabbix/zabbix_agentd.conf -c)
+ZBX_HOSTNAMEITEM_PRESENT=$(egrep ^HostnameItem $ZBX_AGENT_CONF_FILE -c)
 if [ "$ZBX_HOSTNAMEITEM_PRESENT" -ge "1" ]; then
-        ZBX_HOSTNAME=$(hostname)
+  ZBX_HOSTNAME=$(hostname)
 else
-        ZBX_HOSTNAME=$(egrep ^Hostname /etc/zabbix/zabbix_agentd.conf | cut -d = -f 2)
+  ZBX_HOSTNAME=$(egrep ^Hostname $ZBX_AGENT_CONF_FILE | cut -d = -f 2)
 fi
 
 #######

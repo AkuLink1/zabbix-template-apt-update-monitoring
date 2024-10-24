@@ -5,7 +5,8 @@
 #
 
 # Server configuration file route
-ZBX_AGENT_CONF_FILE=$(ls /etc/zabbix/ | grep -E '^zabbix_agent[2d]\.conf$')
+ZBX_CONFIG_FOLDER=/etc/zabbix/
+ZBX_AGENT_CONF_FILE=$ZBX_CONFIG_FOLDER$(ls $ZBX_CONFIG_FOLDER | grep -E '^zabbix_agent[2d]\.conf$')
 
 # Route for tmp file to store yum output
 TEMP_ZBX_FILE=/tmp/zabbix_apt_check_output.tmp

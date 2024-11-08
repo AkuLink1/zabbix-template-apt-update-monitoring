@@ -4,6 +4,9 @@
 # Description:  APT updates Monitor using Zabbix via command `apt-get -s upgrade`
 #
 
+# If your locale is not English, the script will not work. Let's make it English.
+export LANG=en_US.utf8
+
 # Server configuration file route
 AGENTD_CONF_FILE=/etc/zabbix/zabbix_agentd.conf
 
